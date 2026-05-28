@@ -3,7 +3,7 @@ A Python-based simulation designed to compute and render interactions between el
 
 ---
 
-### Prerequesites
+### 🚀 Getting Started
 Requires **python 3.14+**, numpy, pygame-ce:
 ```bash
 pip install numpy pygame-ce
