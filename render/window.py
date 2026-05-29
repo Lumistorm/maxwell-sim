@@ -31,6 +31,7 @@ class Window:
 
         self.handle_events()
         self.window.blit(pygame.transform.scale(surface, self.window.size), (0, 0))
+        self.draw_fps()
 
         pygame.display.flip()
         self.delta_time = self.clock.tick(self.max_fps) * 0.001

@@ -9,11 +9,11 @@ from simulation.simulation import Simulation
 def run():
 
     renderer = Renderer()
-    window = Window((800, 800), "Maxwell's Equations Simulator")
-    sim = Simulation((25, 25))
+    window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=1000)
+    sim = Simulation((200, 200))
 
-    spacing = 32
-    display = pygame.Surface((25 * spacing, 25 * spacing))
+    spacing = 342
+    display = pygame.Surface((200 * spacing, 200 * spacing))
 
     while window.running:
         display.fill((0, 0, 0))
