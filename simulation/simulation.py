@@ -1,7 +1,7 @@
 import pygame
 import numpy as np
 from core.em_field import EMField
-from typehints import *
+from type_hints import *
 from constants import *
 
 

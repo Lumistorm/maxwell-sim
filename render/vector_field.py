@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from typehints import *
+from type_hints import *
 
 
 def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) -> pygame.Surface:

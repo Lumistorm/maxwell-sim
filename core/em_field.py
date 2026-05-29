@@ -1,5 +1,5 @@
 import numpy as np
-from typehints import *
+from type_hints import *
 
 
 class EMField:
