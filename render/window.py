@@ -1,5 +1,5 @@
 import pygame
-from text import draw_text
+from render.text import draw_text
 
 
 class Window:
