@@ -3,7 +3,7 @@ import numpy as np
 from type_hints import *
 
 
-def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) -> pygame.Surface:
+def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) -> Surface:
     rows, columns, _ = field.shape
 
     start_position = np.empty((rows, columns, 2))
