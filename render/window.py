@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 from render.text import draw_text
 
 
@@ -14,6 +15,7 @@ class Window:
         self.clock = pygame.time.Clock()
 
         self.running = True
+        self.max = []
 
     def fps(self):
         return self.clock.get_fps()
@@ -38,7 +40,8 @@ class Window:
 
     def draw_fps(self):
         fps_round = round(self.fps())
-        fps_text = f"FPS: {fps_round}"
+        self.max.append(fps_round)
+        fps_text = f"FPS: {np.max(self.max)}"
         draw_text(self.window, fps_text, (20, 20))
 
     def handle_events(self):

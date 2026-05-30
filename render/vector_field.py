@@ -5,13 +5,16 @@ from type_hints import *
 
 def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) -> pygame.Surface:
     rows, columns, _ = field.shape
-    y_axis = np.arange(rows) * spacing
-    x_axis = np.arange(columns) * spacing
-    grid = np.meshgrid(x_axis, y_axis)
-    start_position = np.stack(grid, axis=-1)
 
-    vector_offset = field[..., ::-1].astype(int)
-    end_position = start_position + vector_offset
+    start_position = np.empty((rows, columns, 2))
+    start_position[..., 0] = np.arange(columns)
+    start_position[..., 1] = np.arange(rows)[:, None]
+    start_position *= spacing
+
+    offset_ints = field.astype(np.int32)
+    offset = offset_ints[..., ::-1]
+
+    end_position = start_position + offset
 
     start_position = start_position.reshape(-1, 2)
     end_position = end_position.reshape(-1, 2)
@@ -25,3 +28,4 @@ def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) 
         )
 
     return surface
+

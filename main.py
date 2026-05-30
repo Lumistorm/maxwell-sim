@@ -10,10 +10,10 @@ def run():
 
     renderer = Renderer()
     window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=1000)
-    sim = Simulation((200, 200))
+    sim = Simulation((100, 100))
 
-    spacing = 342
-    display = pygame.Surface((200 * spacing, 200 * spacing))
+    spacing = 8
+    display = pygame.Surface((100 * spacing, 100 * spacing))
 
     while window.running:
         display.fill((0, 0, 0))
