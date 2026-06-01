@@ -8,6 +8,7 @@ from constants import *
 class Simulation:
     def __init__(self, shape: Size) -> None:
         self.shape = shape
+
         self.em_field = EMField(shape)
 
     @property

@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 
 from render.vector_field import draw_vector_field
 from render.renderer import Renderer
@@ -13,14 +14,14 @@ def run():
     sim = Simulation((100, 100))
 
     spacing = 8
-    display = pygame.Surface((100 * spacing, 100 * spacing))
+    field_surf = pygame.Surface((100 * spacing, 100 * spacing))
 
     while window.running:
-        display.fill((0, 0, 0))
+        field_surf.fill((0, 0, 0))
         sim.step()
-        field_surf = draw_vector_field(display, sim.em_field.electric_field, spacing)
+        field_surf = draw_vector_field(field_surf, sim.em_field.electric_field, spacing)
         renderer.blit(field_surf, (0, 0))
-        display = renderer.tick(display)
+        display = renderer.tick(field_surf)
         window.tick(display)
 
     pygame.quit()

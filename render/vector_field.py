@@ -18,14 +18,18 @@ def draw_vector_field(surface: Surface, field: np.ndarray[float], spacing: int) 
 
     start_position = start_position.reshape(-1, 2)
     end_position = end_position.reshape(-1, 2)
+    start_position = zip(start_position[:, 0].tolist(), start_position[:, 1].tolist())
+    end_position = zip(end_position[:, 0].tolist(), end_position[:, 1].tolist())
+
+    draw_line = pygame.draw.line
+    color = (100, 100, 255)
 
     for start, end in zip(start_position, end_position):
-        pygame.draw.line(
+        draw_line(
             surface,
-            (100, 100, 255),
+            color,
             start,
             end,
         )
 
     return surface
-

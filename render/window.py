@@ -16,6 +16,7 @@ class Window:
 
         self.running = True
         self.max = []
+        self.fps_timer = 0
 
     def fps(self):
         return self.clock.get_fps()
@@ -29,20 +30,22 @@ class Window:
         return self.size[1]
 
     def tick(self, surface):
-        self.window.fill((0, 0, 0))
-
         self.handle_events()
         self.window.blit(pygame.transform.scale(surface, self.window.size), (0, 0))
         self.draw_fps()
 
-        pygame.display.flip()
+        pygame.display.update()
         self.delta_time = self.clock.tick(self.max_fps) * 0.001
 
     def draw_fps(self):
-        fps_round = round(self.fps())
-        self.max.append(fps_round)
-        fps_text = f"FPS: {np.max(self.max)}"
-        draw_text(self.window, fps_text, (20, 20))
+        self.fps_timer -= 1
+        if self.fps_timer < 0:
+            fps_round = round(self.fps())
+            self.max.append(fps_round)
+            self.fps_text = f"FPS: {np.average(self.max[-20:])}"
+
+            self.fps_timer = 60
+        draw_text(self.window, self.fps_text, (20, 20))
 
     def handle_events(self):
         for event in pygame.event.get():
