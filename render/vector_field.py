@@ -42,15 +42,14 @@ def draw_vector_field_array(surface: Surface, field: np.ndarray[float], start_po
 
     color = (100, 100, 255)
     pixels = pygame.surfarray.pixels3d(surface)
+
     rasterize_lines(pixels, start_position, end_position, *color)
     del pixels
-
-    surface.unlock()
 
     return surface
 
 
-@njit(parallel=True, cache=True)
+@njit(cache=True)
 def rasterize_lines(pixels, starts, ends, r, g, b):
     num_lines = starts.shape[0]
     width, height, _ = pixels.shape

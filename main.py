@@ -1,9 +1,10 @@
 import pygame
 import numpy as np
+import sys
 import cProfile
 
 
-from render.vector_field import draw_vector_field
+from render.vector_field import draw_vector_field, draw_vector_field_array
 from render.renderer import Renderer
 from render.window import Window
 from simulation.simulation import Simulation
@@ -29,15 +30,16 @@ def run():
         field_surf.fill((0, 0, 0))
         sim.step()
 
-        field_surf = draw_vector_field(field_surf, sim.em_field.electric_field, start_position)
+        field_surf = draw_vector_field_array(field_surf, sim.em_field.electric_field, start_position)
 
         renderer.blit(field_surf, (0, 0))
         display = renderer.tick(field_surf)
         window.tick(display)
 
     pygame.quit()
+    sys.exit()
 
 
 if __name__ == '__main__':
-    run()
-    # cProfile.run("run()", sort="cumulative")
+    # run()
+    cProfile.run("run()", sort="cumulative")
