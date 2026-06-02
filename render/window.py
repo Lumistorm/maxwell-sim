@@ -5,6 +5,7 @@ from render.text import draw_text
 
 class Window:
     def __init__(self, size: list | tuple, caption: str, max_fps=120):
+
         self.size = size
         self.max_fps = max_fps
         self.delta_time = 0
@@ -31,7 +32,7 @@ class Window:
 
     def tick(self, surface):
         self.handle_events()
-        self.window.blit(pygame.transform.scale(surface, self.window.size), (0, 0))
+        self.window.blit(surface)
         self.draw_fps()
 
         pygame.display.update()
@@ -42,7 +43,7 @@ class Window:
         if self.fps_timer < 0:
             fps_round = round(self.fps())
             self.max.append(fps_round)
-            self.fps_text = f"FPS: {np.average(self.max[-20:])}"
+            self.fps_text = f"FPS: {np.max(self.max[-20:])}"
 
             self.fps_timer = 60
         draw_text(self.window, self.fps_text, (20, 20))

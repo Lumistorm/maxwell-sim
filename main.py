@@ -1,5 +1,7 @@
 import pygame
 import numpy as np
+import cProfile
+
 
 from render.vector_field import draw_vector_field
 from render.renderer import Renderer
@@ -11,15 +13,24 @@ def run():
 
     renderer = Renderer()
     window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=1000)
-    sim = Simulation((100, 100))
+    sim = Simulation((200, 200))
 
-    spacing = 8
-    field_surf = pygame.Surface((100 * spacing, 100 * spacing))
+    rows, columns = 200, 200
+
+    start_position = np.empty((rows, columns, 2))
+    start_position[..., 0] = np.arange(columns)
+    start_position[..., 1] = np.arange(rows)[:, None]
+    start_position *= 4
+
+    spacing = 4
+    field_surf = pygame.Surface((200 * spacing, 200 * spacing))
 
     while window.running:
         field_surf.fill((0, 0, 0))
         sim.step()
-        field_surf = draw_vector_field(field_surf, sim.em_field.electric_field, spacing)
+
+        field_surf = draw_vector_field(field_surf, sim.em_field.electric_field, start_position)
+
         renderer.blit(field_surf, (0, 0))
         display = renderer.tick(field_surf)
         window.tick(display)
@@ -29,3 +40,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+    # cProfile.run("run()", sort="cumulative")
