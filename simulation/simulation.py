@@ -23,8 +23,8 @@ class Simulation:
         grid_y, grid_x = np.indices(self.shape)
         mouse_pos = pygame.mouse.get_pos()
 
-        dy = mouse_pos[1] / 4 - grid_y
-        dx = mouse_pos[0] / 4 - grid_x
+        dy = mouse_pos[1] / 8 - grid_y
+        dx = mouse_pos[0] / 8 - grid_x
         r = np.sqrt(dx * dx + dy * dy)
         r2 = r * r + EPSILON
 

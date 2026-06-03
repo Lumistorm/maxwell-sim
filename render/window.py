@@ -18,6 +18,7 @@ class Window:
         self.running = True
         self.max = []
         self.fps_timer = 0
+        self.fps_text = ''
 
     def fps(self):
         return self.clock.get_fps()
@@ -43,7 +44,7 @@ class Window:
         if self.fps_timer < 0:
             fps_round = round(self.fps())
             self.max.append(fps_round)
-            self.fps_text = f"FPS: {np.max(self.max[-20:])}"
+            self.fps_text = f"FPS: {max(self.max[-20:])}"
 
             self.fps_timer = 60
         draw_text(self.window, self.fps_text, (20, 20))
