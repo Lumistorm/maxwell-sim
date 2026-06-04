@@ -1,5 +1,3 @@
-import pygame
-import numpy as np
 from type_hints import *
 
 

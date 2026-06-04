@@ -1,4 +1,3 @@
-import pygame
 import numpy as np
 from numba import njit
 from type_hints import *
@@ -7,10 +6,8 @@ from type_hints import *
 def draw_vector_field(surface: Surface, field: np.ndarray, start_position) -> Surface:
     offset = field[..., ::-1].astype(np.int32)
 
-    end_position = start_position + offset
+    end_position = start_position + offset.reshape(-1, 2)
 
-    start_position = start_position.reshape(-1, 2)
-    end_position = end_position.reshape(-1, 2)
     start_position = zip(start_position[:, 0].tolist(), start_position[:, 1].tolist())
     end_position = zip(end_position[:, 0].tolist(), end_position[:, 1].tolist())
 

@@ -1,5 +1,4 @@
 import pygame
-import numpy as np
 from render.text import draw_text
 
 
@@ -16,7 +15,6 @@ class Window:
         self.clock = pygame.time.Clock()
 
         self.running = True
-        self.max = []
         self.fps_timer = 0
         self.fps_text = ''
 
@@ -36,15 +34,14 @@ class Window:
         self.window.blit(surface)
         self.draw_fps()
 
-        pygame.display.update()
+        pygame.display.flip()
         self.delta_time = self.clock.tick(self.max_fps) * 0.001
 
     def draw_fps(self):
         self.fps_timer -= 1
         if self.fps_timer < 0:
             fps_round = round(self.fps())
-            self.max.append(fps_round)
-            self.fps_text = f"FPS: {max(self.max[-20:])}"
+            self.fps_text = f"FPS: {fps_round}"
 
             self.fps_timer = 60
         draw_text(self.window, self.fps_text, (20, 20))

@@ -1,4 +1,3 @@
-import pygame
 from type_hints import *
 
 pygame.init()
