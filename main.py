@@ -1,29 +1,25 @@
 import pygame
 import sys
-from render.vector_field import draw_vector_field, draw_vector_field_array
 from render.renderer import Renderer
 from render.window import Window
 from simulation.simulation import Simulation
 
 
 def run():
-    rows, columns = 25, 25
-    spacing = 32
+    rows, columns = 50, 50
+    spacing = 16
 
     renderer = Renderer()
-    window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=1000)
+    window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=0)
     sim = Simulation((rows, columns), spacing)
 
-    field_surf = pygame.Surface((rows * spacing, columns * spacing))
+    display = pygame.Surface((800, 800))
 
     while window.running:
-        field_surf.fill((0, 0, 0))
         sim.step()
+        sim.draw(renderer)
 
-        field_surf = draw_vector_field_array(field_surf, sim.em_field.electric_field, sim.grid_positions)
-
-        renderer.blit(field_surf, (0, 0))
-        display = renderer.tick(field_surf)
+        renderer.tick(display)
         window.tick(display)
 
     pygame.quit()

@@ -1,4 +1,5 @@
 import pygame
+import time
 from render.text import draw_text
 
 
@@ -17,6 +18,8 @@ class Window:
         self.running = True
         self.fps_timer = 0
         self.fps_text = ''
+        self.prev = 0
+        self.fps =0
 
     def fps(self):
         return self.clock.get_fps()
@@ -39,11 +42,15 @@ class Window:
 
     def draw_fps(self):
         self.fps_timer -= 1
-        if self.fps_timer < 0:
-            fps_round = round(self.fps())
-            self.fps_text = f"FPS: {fps_round}"
 
+        if self.delta_time > 0:
+            fps = 1 / self.delta_time
+            self.fps = self.fps * (1 - 0.05) + fps * 0.05
+
+        if self.fps_timer < 0:
+            self.fps_text = f"FPS: {round(self.fps)}"
             self.fps_timer = 60
+
         draw_text(self.window, self.fps_text, (20, 20))
 
     def handle_events(self):

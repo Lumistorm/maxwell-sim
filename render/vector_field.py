@@ -26,6 +26,7 @@ def draw_vector_field(surface: Surface, field: np.ndarray, start_position) -> Su
 
 
 def draw_vector_field_array(surface: Surface, field: np.ndarray, start_position) -> Surface:
+
     offset = field[..., ::-1].astype(np.int32)
 
     end_position = start_position + offset.reshape(-1, 2)
@@ -39,11 +40,18 @@ def draw_vector_field_array(surface: Surface, field: np.ndarray, start_position)
     return surface
 
 
-@njit(cache=True)
+@njit(cache=True, fastmath=True)
 def rasterize_lines(pixels, starts, ends, r, g, b):
     width, height, _ = pixels.shape
 
-    for (start_x, start_y), (end_x, end_y) in zip(starts, ends):
+    num_lines = starts.shape[0]
+
+    for index in range(num_lines):
+        start_x = starts[index, 0]
+        start_y = starts[index, 1]
+        end_x = ends[index, 0]
+        end_y = ends[index, 1]
+
         dx = abs(end_x - start_x)
         dy = abs(end_y - start_y)
         sx = 1 if start_x < end_x else -1
