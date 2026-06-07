@@ -1,11 +1,9 @@
 import pygame
-import time
 from render.text import draw_text
 
 
 class Window:
-    def __init__(self, size: list | tuple, caption: str, max_fps=120):
-
+    def __init__(self, size: list | tuple, caption: str, max_fps=120) -> None:
         self.size = size
         self.max_fps = max_fps
         self.delta_time = 0
@@ -16,23 +14,23 @@ class Window:
         self.clock = pygame.time.Clock()
 
         self.running = True
+
         self.fps_timer = 0
         self.fps_text = ''
-        self.prev = 0
-        self.fps =0
+        self.fps = 0
 
-    def fps(self):
+    def fps(self) -> float:
         return self.clock.get_fps()
 
     @property
-    def width(self):
+    def width(self) -> int:
         return self.size[0]
 
     @property
-    def height(self):
+    def height(self) -> int:
         return self.size[1]
 
-    def tick(self, surface):
+    def tick(self, surface) -> None:
         self.handle_events()
         self.window.blit(surface)
         self.draw_fps()
@@ -40,7 +38,7 @@ class Window:
         pygame.display.flip()
         self.delta_time = self.clock.tick(self.max_fps) * 0.001
 
-    def draw_fps(self):
+    def draw_fps(self) -> None:
         self.fps_timer -= 1
 
         if self.delta_time > 0:
@@ -53,7 +51,7 @@ class Window:
 
         draw_text(self.window, self.fps_text, (20, 20))
 
-    def handle_events(self):
+    def handle_events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
