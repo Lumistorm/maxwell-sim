@@ -1,4 +1,3 @@
-import pygame
 import numpy as np
 from core.em_field import EMField
 from type_hints import *
