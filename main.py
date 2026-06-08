@@ -6,8 +6,8 @@ from simulation.simulation import Simulation
 
 
 def run():
-    rows, columns = 50, 50
-    spacing = 16
+    rows, columns = 200, 200
+    spacing = 4
 
     renderer = Renderer()
     window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=0)

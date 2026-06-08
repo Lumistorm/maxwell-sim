@@ -25,15 +25,13 @@ def draw_vector_field(surface: Surface, field: np.ndarray, start_position) -> Su
     return surface
 
 
-def draw_vector_field_array(surface: Surface, field: np.ndarray, start_position) -> Surface:
-
-    offset = field[..., ::-1].astype(np.int32)
-
-    end_position = start_position + offset.reshape(-1, 2)
+def draw_vector_field_array(surface: Surface, field_x: np.ndarray, field_y: np.ndarray, start_position) -> Surface:
+    end_position = np.empty_like(start_position)
+    end_position[:, 0] = start_position[:, 0] + field_x.reshape(-1).astype(np.int32)
+    end_position[:, 1] = start_position[:, 1] + field_y.reshape(-1).astype(np.int32)
 
     color = (100, 100, 255)
     pixels = pygame.surfarray.pixels3d(surface)
-    print(type(pixels))
 
     rasterize_lines(pixels, start_position, end_position, *color)
     del pixels
@@ -44,7 +42,6 @@ def draw_vector_field_array(surface: Surface, field: np.ndarray, start_position)
 @njit(cache=True, fastmath=True)
 def rasterize_lines(pixels, starts, ends, r, g, b) -> np.ndarray:
     width, height, _ = pixels.shape
-
     num_lines = starts.shape[0]
 
     for index in range(num_lines):
@@ -63,13 +60,12 @@ def rasterize_lines(pixels, starts, ends, r, g, b) -> np.ndarray:
         x, y = start_x, start_y
 
         while True:
-            if x == end_x and y == end_y:
-                break
-
             if 0 <= x < width and 0 <= y < height:
                 pixels[x, y, 0] = r
                 pixels[x, y, 1] = g
                 pixels[x, y, 2] = b
+            if x == end_x and y == end_y:
+                break
 
             error_2 = 2 * error
 
