@@ -45,14 +45,14 @@ class Simulation:
         mx = mouse_pos[0] // self.spacing
         my = mouse_pos[1] // self.spacing
 
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
-            self.em_field.ex[mx, my] += 1
-            self.em_field.ey[mx, my] += 0
+        if pygame.key.get_just_pressed()[pygame.K_SPACE]:
+            self.em_field.ex[mx, my] += 300
+            self.em_field.ey[mx, my] -= 300
 
         self.em_field.step()
         self.vx = self.em_field.ex[:, :-1].copy()
         self.vy = self.em_field.ey[:-1, :].copy()
-        charge = 25
+        charge = 250
 
         # # limit vector magnitude to charge strength
         mag = np.sqrt(self.vx * self.vx + self.vy * self.vy)
@@ -64,4 +64,4 @@ class Simulation:
     def draw(self, renderer) -> None:
         self.field_surface.fill((0, 0, 0))
         draw_vector_field_array(self.field_surface, self.vx, self.vy, self.vector_positions)
-        renderer.blit(self.field_surface, (0, 0))
+        renderer.add(self.field_surface, (0, 0))

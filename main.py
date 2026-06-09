@@ -5,21 +5,24 @@ from render.window import Window
 from simulation.simulation import Simulation
 
 
+WINDOW_SIZE = (800, 800)
+ROWS, COLUMNS = 200, 200
+SPACING = 4
+
+
 def run():
-    rows, columns = 200, 200
-    spacing = 4
-
     renderer = Renderer()
-    window = Window((800, 800), "Maxwell's Equations Simulator", max_fps=0)
-    sim = Simulation((rows, columns), spacing)
-
-    display = pygame.Surface((800, 800))
+    sim = Simulation((ROWS, COLUMNS), SPACING)
+    window = Window(WINDOW_SIZE, "Maxwell's Equations Simulator", max_fps=0)
+    display = pygame.Surface(WINDOW_SIZE)
 
     while window.running:
+        window.poll_events()
+
         sim.step()
         sim.draw(renderer)
 
-        renderer.tick(display)
+        renderer.render(display)
         window.tick(display)
 
     pygame.quit()

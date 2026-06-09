@@ -3,19 +3,19 @@ from type_hints import *
 
 class Renderer:
     def __init__(self) -> None:
-        self.render_queue = []
-        self.reset()
+        self.queue = []
+        self.clear()
 
-    def reset(self) -> None:
-        self.render_queue = []
+    def clear(self) -> None:
+        self.queue.clear()
 
-    def blit(self, surface: Surface, position: PositionInt) -> None:
-        self.render_queue.append((surface, position))
+    def add(self, surface: Surface, position: PositionInt) -> None:
+        self.queue.append((surface, position))
 
-    def tick(self, dest_surfaces: Surface) -> Surface:
-        for surface, position in self.render_queue:
-            dest_surfaces.blit(surface, position)
+    def render(self, dest_surface: Surface) -> Surface:
+        for surface, position in self.queue:
+            dest_surface.blit(surface, position)
 
-        self.reset()
+        self.clear()
 
-        return dest_surfaces
+        return dest_surface

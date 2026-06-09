@@ -1,37 +1,30 @@
-import pygame
 from render.text import draw_text
+from type_hints import *
 
 
 class Window:
-    def __init__(self, size: list | tuple, caption: str, max_fps=120) -> None:
+    def __init__(self, size: Size, caption: str, max_fps: int = 120) -> None:
         self.size = size
-        self.max_fps = max_fps
-        self.delta_time = 0
+        self.width = size[0]
+        self.height = size[1]
 
         self.window = pygame.display.set_mode(size)
         pygame.display.set_caption(caption)
 
+        self.max_fps = max_fps
+        self.delta_time = 0
         self.clock = pygame.time.Clock()
-
-        self.running = True
 
         self.fps_timer = 0
         self.fps_text = ''
         self.fps = 0
 
+        self.running = True
+
     def fps(self) -> float:
         return self.clock.get_fps()
 
-    @property
-    def width(self) -> int:
-        return self.size[0]
-
-    @property
-    def height(self) -> int:
-        return self.size[1]
-
     def tick(self, surface) -> None:
-        self.handle_events()
         self.window.blit(surface)
         self.draw_fps()
 
@@ -51,7 +44,7 @@ class Window:
 
         draw_text(self.window, self.fps_text, (20, 20))
 
-    def handle_events(self) -> None:
+    def poll_events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False

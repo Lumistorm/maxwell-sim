@@ -60,6 +60,8 @@ def rasterize_lines(pixels, starts, ends, r, g, b) -> np.ndarray:
         x, y = start_x, start_y
 
         while True:
+            if x == end_x and y == end_y:
+                break
             if 0 <= x < width and 0 <= y < height:
                 pixels[x, y, 0] = r
                 pixels[x, y, 1] = g
